@@ -30,5 +30,9 @@ public class CartController {
         return ResponseEntity.status(HttpStatus.CREATED).body(orderService.placeOrder(placeOrderDto));
     }
 
+    @GetMapping("/myOrders/{userId}")
+    public ResponseEntity<List<OrderDto>> getMyOrders(@PathVariable Long userId) {
+        return ResponseEntity.ok(orderService.getMyPlacedOrders(userId));
+    }
 
 }
