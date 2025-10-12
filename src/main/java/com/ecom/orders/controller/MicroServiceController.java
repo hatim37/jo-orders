@@ -5,9 +5,7 @@ import com.ecom.orders.entity.Order;
 import com.ecom.orders.services.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -43,6 +41,11 @@ public class MicroServiceController {
         log.info("demande sync recu");
         usersOrderInitializer.synchronize();
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/_internal/orderFindById/{id}")
+    public Order findById(@PathVariable Long id){
+        return this.orderService.findById(id);
     }
 }
 
