@@ -9,7 +9,13 @@ RUN mvn -U -q -DskipTests dependency:go-offline
 #
 COPY src ./src
 #
-RUN mvn -U clean package -DskipTests
+ARG SKIP_TESTS=true
+
+RUN if [ "$SKIP_TESTS" = "true" ]; then \
+        mvn -U clean package -DskipTests; \
+    else \
+        mvn -U clean package; \
+    fi
 
 # Run
 FROM eclipse-temurin:17-jre-jammy
