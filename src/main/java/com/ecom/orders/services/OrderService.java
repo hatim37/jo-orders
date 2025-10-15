@@ -45,12 +45,17 @@ public class OrderService {
     }
 
     public void newOrder(Order order) {
+        Optional<Order> existOrder = Optional.ofNullable(orderRepository.findByUserIdAndOrderStatus(order.getId(), OrderStatus.EnCours));
+        if (existOrder.isPresent()) {
+            return;
+        }
         Order newOrder = new Order();
         newOrder.setAmount(0L);
+        newOrder.setTotalAmount(0L);
         newOrder.setOrderStatus(OrderStatus.EnCours);
         newOrder.setTrackingId(UUID.randomUUID());
         newOrder.setUserId(order.getUserId());
-        newOrder.setTotalAmount(0L);
+
         orderRepository.save(newOrder);
     }
 
